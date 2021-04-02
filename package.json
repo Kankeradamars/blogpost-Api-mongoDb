@@ -5,6 +5,7 @@
   "main": "serve.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"babel-node ./serve.js",
     "dev-start": "babel-node ./serve.js"
   },
   "repository": {
