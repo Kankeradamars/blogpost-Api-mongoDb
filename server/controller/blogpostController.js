@@ -1,5 +1,19 @@
 import blogData from '../model/blogpostModel';
+import Response from '../Helpers/response';
+import axios from 'axios'
 class blogController {
+
+    static getAllBlogFromAPI =async(req,res)=> {
+        try{
+            const responseFromAPI=await axios.get('https://blogpost-api-shecancode.herokuapp.com/api/v1/blog/dash/all')
+            return Response.successMessage(res,"fetching successfully",responseFromAPI.data,200 )
+
+        }catch(e){
+            console.log(e)
+            return Response.errorMessage(res,"fetching failed",403)
+
+        }
+    }
     static createblogpost = async (req, res) => {
 
         let {
@@ -15,33 +29,18 @@ class blogController {
 
 
         if (!data) {
-            return res.status(417).json(
-                {
-                    status: 417,
-                    message: "blog failed to be created",
-                }
-            )
+            return Response.errorMessage(res,"blog failed to be created", 417)
+           
         }
-
-        return res.status(201).json(
-            {
-                status: 201,
-                message: "blog created is successfull",
-                data
-            }
-        )
+         return Response.successMessage(res, "blog created is successfull", data,201)
+        
 
     }
     static getAllBlog = async (req, res) => {
         
         const data = await blogData.find();
-        //const data = await blogData.create(req.body);
-        return res.status(200).json({
-            status: 200,
-            message: "this is all blogs",
-            data: data
-
-        })
+       return Response.successMessage(res, "this is all blogs",data, 200)
+        
     }
 
     static getOneBlog = async (req, res) => {
@@ -50,17 +49,11 @@ class blogController {
         const data = await blogData.findById(blogid);
 
         if (!data) {
-            return res.status(417).json({
-                status: 417,
-                error: "there is no  one blog",
-
-            })
+            return Response.errorMessage(res, "there is no  one blog", 417)
+            
         }
-        return res.status(201).json({
-            status: 201,
-            message: "you have got one blogpost",
-            data
-        })
+        return Response.successMessage(res,"you have got one blogpost", data,201)
+            
     }
 
     static deleteOneBlog = async (req, res) => {
@@ -69,17 +62,11 @@ class blogController {
 
 
         if (!data) {
-            return res.status(404).json({
-                status: 417,
-                message: "blog failed to be deleted",
-
-            });
+            return Response.errorMessage(res, "blog failed to be deleted",417)
+            
         }
-        return res.status(200).json({
-            status: 200,
-            message: "deleted successfully",
-            data
-        })
+        return Response.successMessage(res,"deleted successfully",{data},201)
+        
     }
     static updateOneBlog = async (req, res) => {
         const blogid = req.params.id;
@@ -98,21 +85,15 @@ class blogController {
 
 
         if (!data) {
-            return res.status(417).json({
-                status: 417,
-                message: "update failed",
-
-            });
+            return Response.errorMessage(res, "update failed",data, 417)
+            
         }
 
 
 
         const dataUpdated= await blogData.findById(blogid)
-        return res.status(200).json({
-            status: 200,
-            message: "updated is successfully",
-            data: dataUpdated   
-        })
+        return Response.successMessage(res, "updated is successfully",data,200)
+        
     }
 }
 

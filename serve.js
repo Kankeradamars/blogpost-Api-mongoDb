@@ -1,10 +1,12 @@
 
 import express from "express";
 import bodyParse from "body-parser";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
 import Authroute from './server/Router/Authroute';
 import blogpostAuthroute from './server/Router/blogpostRouter';
-import dotenv from "dotenv";
-import mongoose from "mongoose"
+import Response from "./server/Helpers/response";
+import commentRoute from './server/Router/commentRoute';
 dotenv.config({path:"./.env"});
 
 const app = express();
@@ -13,12 +15,12 @@ const app = express();
 app.use(bodyParse.json());
 app.use('/api/v1/blogpost' ,Authroute);
 app.use('/api/v1/blog' , blogpostAuthroute);
+app.use('/api/v1/comment' ,commentRoute );
 
 app.use('/', (req, res) => {
-    res.status(200).send({
-        status: 200,
-        message: "This is a Blogpost API"
-    })
+
+    return  Response.errorMessage(res, "This is route doesn't exist", 417)
+    
 })
 //we'are going to connect database NA PORT yacu, kugirango ijye iraningira kur port ya data base apana imwe ya1
 

@@ -8,7 +8,7 @@ router.get('/blogpost/all',verifyAuth ,blogController.getAllBlog);
 router.get('/blogpost/one/:id' ,verifyAuth,blogController.getOneBlog);
 router.delete('/blogpost/deleteone/:id' ,verifyAuth,Validator.VerifyAccess,Validator.validateInput,blogController.deleteOneBlog);
 router.patch('/blogpost/updateOneBlog/:id' ,verifyAuth,Validator.VerifyAccess,Validator.validateInput, blogController.updateOneBlog);
-
+router.get('/blogpost/getAllFromAPI',blogController.getAllBlogFromAPI)
 
 export default router;
 
