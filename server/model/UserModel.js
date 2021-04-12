@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema(
         password: { type: String, required: [true, "password is required"] },
         gender: { type: String, enum: ["male", "female"] },
         role: { type: String, enum: ["user", "admin"] , required: [true]},
-        adress: { type: String,default: "Rwanda" },
+        adress: { type: String,default: "Rwanda" }, 
+        passwordChangedTime:{  type: String, default:Date.now() }
     },
 )
 const userInfo=mongoose.model("user",userSchema);

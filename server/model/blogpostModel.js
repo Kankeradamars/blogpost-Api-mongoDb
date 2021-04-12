@@ -10,6 +10,12 @@ const blogSchema = new mongoose.Schema(
         timeStamp: {
             type: String
         },
+        commentId: [
+            {
+                type:mongoose.Schema.ObjectId,
+                ref: "comment",
+            }
+        ]
     }
 );
 
@@ -22,7 +28,10 @@ blogSchema.pre(/^find/,function(next){
     this.populate({
         path:"userId",
         select:"firstName email"
-    });
+    }).populate({
+        path:"commentId",
+        select:"content user timeStamp"
+    })
     next();
 })
 const blogData=mongoose.model("blogpost", blogSchema);
